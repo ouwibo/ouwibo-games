@@ -1,0 +1,58 @@
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #000;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    overflow: hidden;
+    touch-action: none; /* Mencegah scroll saat main */
+}
+
+#app-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.ui {
+    position: absolute;
+    top: 20px;
+    width: 100%;
+    text-align: center;
+    z-index: 10;
+    color: #00ff41;
+}
+
+#gameCanvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+#overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+}
+
+button {
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    background: #00ff41;
+    border: none;
+    color: #000;
+    font-weight: bold;
+    border-radius: 50px;
+    box-shadow: 0 0 15px #00ff41;
+}
