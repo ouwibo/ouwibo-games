@@ -1,15 +1,32 @@
 {
   "short_name": "CyberDodge",
-  "name": "Cyber-Dodge Mini App",
+  "name": "Cyber Dodge - Base Mini App",
+  "description": "An exciting dodge game on Base network",
   "icons": [
     {
       "src": "https://i.postimg.cc/m2jtY6m9/player-ship.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://i.postimg.cc/m2jtY6m9/player-ship.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
-  "start_url": "./index.html",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "portrait-primary",
   "theme_color": "#0d0208",
-  "background_color": "#0d0208"
+  "background_color": "#0d0208",
+  "screenshots": [
+    {
+      "src": "https://i.postimg.cc/m2jtY6m9/player-ship.png",
+      "sizes": "540x720",
+      "type": "image/png"
+    }
+  ]
 }
