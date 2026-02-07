@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 export default function Home() {
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [score, setScore] = useState(0);
   const [gameActive, setGameActive] = useState(false);
   const [showOverlay, setShowOverlay] = useState(true);
@@ -13,8 +13,8 @@ export default function Home() {
     score: 0,
     gameActive: false,
     player: { x: 0, y: 0, w: 50, h: 50 },
-    enemies: [],
-    keys: {},
+    enemies: [] as Array<{ x: number; y: number; w: number; h: number }>,
+    keys: {} as Record<string, boolean>,
     mouseX: 0,
     gameSpeed: 5,
     spawnRate: 0.04,
@@ -25,13 +25,15 @@ export default function Home() {
     if (!canvas) return;
 
     const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
     const gameState = gameStateRef.current;
-    let animationId;
+    let animationId: number;
 
     // Atur ukuran canvas
     const resize = () => {
       canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight - (document.querySelector('.header')?.offsetHeight || 0);
+      canvas.height = window.innerHeight - (document.querySelector('.header')?.clientHeight || 0);
       gameState.player.x = canvas.width / 2;
     };
 
@@ -53,7 +55,7 @@ export default function Home() {
       animate();
     };
 
-    window.startGame = startGame; // Expose untuk button
+    (window as any).startGame = startGame;
 
     const animate = () => {
       if (!gameState.gameActive) return;
@@ -100,108 +102,80 @@ export default function Home() {
         ) {
           gameState.gameActive = false;
           setGameActive(false);
-          setOverlayContent({ title: 'GAME OVER', score: gameState.score, button: 'RETRY' });
+          setOverlayContent({ title: `GAME OVER!\nScore: ${gameState.score}`, button: 'MAIN LAGI' });
           setShowOverlay(true);
+          return;
         }
 
+        // Hapus musuh jika keluar layar
         if (en.y > canvas.height) {
           gameState.enemies.splice(i, 1);
           gameState.score++;
           setScore(gameState.score);
 
-          // Kesulitan bertambah setiap 5 poin
-          if (gameState.score % 5 === 0) {
-            gameState.gameSpeed = Math.min(gameState.gameSpeed + 0.5, 12);
-            gameState.spawnRate = Math.min(gameState.spawnRate + 0.01, 0.08);
+          // Tingkat kesulitan
+          if (gameState.score % 10 === 0) {
+            gameState.gameSpeed += 0.5;
+            gameState.spawnRate += 0.005;
           }
         }
       });
 
       // Gambar pemain
-      ctx.fillStyle = '#fff';
+      ctx.fillStyle = '#ff0080';
       ctx.fillRect(gameState.player.x, gameState.player.y, gameState.player.w, gameState.player.h);
-      ctx.strokeStyle = '#00ff00';
+      ctx.strokeStyle = '#ffff00';
       ctx.lineWidth = 3;
       ctx.strokeRect(gameState.player.x, gameState.player.y, gameState.player.w, gameState.player.h);
-
-      // Glow effect
-      ctx.fillStyle = 'rgba(0, 255, 0, 0.2)';
-      ctx.fillRect(gameState.player.x - 5, gameState.player.y - 5, gameState.player.w + 10, gameState.player.h + 10);
 
       animationId = requestAnimationFrame(animate);
     };
 
-    // Keyboard controls
-    const handleKeyDown = (e) => {
+    // Keyboard
+    const handleKeyDown = (e: KeyboardEvent) => {
       gameState.keys[e.key] = true;
     };
 
-    const handleKeyUp = (e) => {
+    const handleKeyUp = (e: KeyboardEvent) => {
       gameState.keys[e.key] = false;
     };
 
-    // Mouse controls
-    const handleMouseMove = (e) => {
+    // Mouse event
+    const handleMouseMove = (e: MouseEvent) => {
       gameState.mouseX = e.clientX;
-    };
-
-    // Touch controls
-    const handleTouchMove = (e) => {
-      if (gameState.gameActive) {
-        e.preventDefault();
-        const headerHeight = document.querySelector('.header')?.offsetHeight || 0;
-        gameState.player.x = e.touches[0].clientX - gameState.player.w / 2;
-        gameState.player.y = e.touches[0].clientY - headerHeight - gameState.player.h / 2;
-      }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
     window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('touchmove', handleTouchMove, { passive: false });
 
-    // Service Worker
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker
-        .register('/sw.js')
-        .then(() => console.log('Game siap dijalankan Offline!'))
-        .catch((err) => console.log('Gagal daftar SW:', err));
-    }
+    // Start animasi jika game aktif
+    if (gameState.gameActive) animate();
 
     return () => {
       window.removeEventListener('resize', resize);
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('touchmove', handleTouchMove);
-      if (animationId) cancelAnimationFrame(animationId);
+      cancelAnimationFrame(animationId);
     };
   }, []);
 
   return (
     <div className="container">
-      <div className="header">
-        <img src="https://docs.base.org/img/logo.svg" alt="Base" />
-        <span>BASE CYBER DODGE</span>
-      </div>
-      <div id="ui">SKOR: <span id="score">{score}</span></div>
-      <canvas ref={canvasRef} id="gameCanvas"></canvas>
+      <div className="header"></div>
+      <canvas ref={canvasRef} id="gameCanvas" />
       {showOverlay && (
         <div id="overlay">
-          <h1>{overlayContent.title}</h1>
-          {overlayContent.score !== undefined && <p>Skor: {overlayContent.score}</p>}
-          <button 
-            id="startBtn" 
-            onClick={() => window.startGame()}
-          >
-            {overlayContent.button}
-          </button>
+          <div className="overlay-content">
+            <h1>{overlayContent.title}</h1>
+            <button onClick={() => (window as any).startGame()}>
+              {overlayContent.button}
+            </button>
+          </div>
         </div>
       )}
-      <div id="wallet-container">
-        <button id="connectBtn">Connect Wallet</button>
-        <span id="walletAddress" style={{ display: 'none' }}></span>
-      </div>
+      <div id="ui">{score}</div>
     </div>
   );
 }

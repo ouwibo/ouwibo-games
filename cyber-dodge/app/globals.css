@@ -1,18 +1,21 @@
 * {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
+  margin: 0;
+  padding: 0;
 }
 
 html,
 body {
-  margin: 0;
-  padding: 0;
+  width: 100%;
+  height: 100%;
   background-color: #000;
   font-family: 'Segoe UI', Roboto, sans-serif;
   overflow: hidden;
   touch-action: none;
-  width: 100%;
-  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 #__next {
@@ -21,11 +24,14 @@ body {
 }
 
 .container {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  background-color: #000;
 }
 
 .header {
@@ -38,6 +44,8 @@ body {
   color: #00ff41;
   font-weight: bold;
   z-index: 5;
+  height: 50px;
+  flex-shrink: 0;
 }
 
 .header img {
@@ -46,12 +54,12 @@ body {
 }
 
 #ui {
-  position: absolute;
-  top: 20px;
+  position: fixed;
+  top: 70px;
   left: 20px;
   z-index: 10;
   color: #00ff41;
-  font-size: 1rem;
+  font-size: 1.5rem;
   font-weight: bold;
 }
 
@@ -59,11 +67,15 @@ body {
   width: 100%;
   flex: 1;
   display: block;
+  background-color: #0d0208;
 }
 
 #overlay {
-  position: absolute;
-  inset: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: rgba(0, 0, 0, 0.8);
   display: flex;
   flex-direction: column;
@@ -74,9 +86,14 @@ body {
   text-align: center;
 }
 
+.overlay-content {
+  text-align: center;
+}
+
 #overlay h1 {
   font-size: 2.5rem;
   margin: 20px 0;
+  color: #00ff41;
 }
 
 #overlay p {
