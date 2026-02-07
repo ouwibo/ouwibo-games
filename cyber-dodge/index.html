@@ -3,18 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Base Cyber Dodge</title>
-    <script src="https://nextjs.org/docs/app/building-your-application/optimizing/scripts"></script>
-    <link rel="stylesheet" href="style.css">
     <meta name="base:app_id" content="6984a6d24609f1d788ad2bd3" />
+    <title>Cyber Dodge - Base Game</title>
+    <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="style.css">
-    <script src="game.js"></script>
 </head>
 <body>
     <div id="app">
         <div class="header">
             <img src="https://docs.base.org/img/logo.svg" width="20" alt="Base">
-            <span>BASE KONTOL APP</span>
+            <span>BASE CYBER DODGE</span>
         </div>
         <div id="ui">SKOR: <span id="score">0</span></div>
         <canvas id="gameCanvas"></canvas>
@@ -31,5 +29,11 @@
       .catch(err => console.log("Gagal daftar SW:", err));
   }
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/index.umd.min.js"></script>
+
+<div id="wallet-container">
+    <button id="connectBtn">Connect Wallet</button>
+    <span id="walletAddress" style="display: none;"></span>
+</div>
 </body>
 </html>

@@ -3,8 +3,9 @@ const assets = [
   './',
   './index.html',
   './style.css',
-  './game.js',
-  './manifest.json'
+  './manifest.json',
+  './src/game.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/index.umd.min.js'
 ];
 
 // Install Service Worker

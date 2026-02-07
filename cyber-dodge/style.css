@@ -1,4 +1,3 @@
-/* Reset dasar agar tidak ada scrollbar liar */
 * {
     margin: 0;
     padding: 0;
@@ -6,80 +5,179 @@
 }
 
 body {
-    background-color: #000; /* Hitam pekat standar Base */
-    color: #fff;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    overflow: hidden; /* Mencegah layar goyang saat main */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    width: 100vw;
+    background: #0d0208;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
 }
 
 #app {
-    position: relative;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
-/* UI Skor di bagian atas */
+.header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 20px;
+    background: rgba(0, 82, 255, 0.1);
+    border-bottom: 2px solid #0052ff;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+}
+
 #ui {
     position: absolute;
-    top: 20px;
-    left: 0;
-    width: 100%;
-    text-align: center;
+    top: 80px;
+    left: 20px;
+    z-index: 50;
+    color: #fff;
     font-size: 24px;
     font-weight: bold;
-    color: #0052ff; /* Biru khas Base */
-    text-shadow: 0 0 10px rgba(0, 82, 255, 0.5);
-    z-index: 10;
+    background: rgba(0, 82, 255, 0.2);
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 2px solid #0052ff;
 }
 
-/* Canvas Game */
-canvas {
+#score {
+    color: #00ff00;
+    font-weight: bold;
+}
+
+#gameCanvas {
+    flex: 1;
     display: block;
-    background: radial-gradient(circle, #1a1a1a 0%, #000 100%);
-    width: 100%;
-    height: 100%;
+    cursor: none;
 }
 
-/* Overlay Menu */
 #overlay {
     position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.85);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    z-index: 20;
-    text-align: center;
+    justify-content: center;
+    z-index: 100;
 }
 
 #overlay h1 {
     color: #0052ff;
-    margin-bottom: 20px;
-    letter-spacing: 2px;
+    font-size: 48px;
+    margin-bottom: 30px;
+    text-shadow: 0 0 20px #0052ff;
+    animation: pulse 1s infinite;
 }
 
-/* Tombol Biru Base */
-button {
+#overlay p {
+    color: #fff;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+#startBtn, #reloadBtn {
+    padding: 15px 40px;
     background-color: #0052ff;
     color: white;
     border: none;
-    padding: 15px 40px;
-    font-size: 18px;
+    border-radius: 8px;
     font-weight: bold;
-    border-radius: 12px;
+    font-size: 18px;
     cursor: pointer;
-    transition: transform 0.2s, background-color 0.2s;
+    box-shadow: 0 4px 15px rgba(0, 82, 255, 0.4);
+    transition: all 0.3s ease;
 }
 
-button:active {
-    transform: scale(0.95);
-    background-color: #003eb3;
+#startBtn:hover, #reloadBtn:hover {
+    background-color: #004bdd;
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0, 82, 255, 0.6);
+}
+
+#startBtn:active, #reloadBtn:active {
+    transform: scale(0.98);
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+#wallet-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+}
+
+#connectBtn {
+    padding: 10px 20px;
+    background-color: #0052ff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 82, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+#connectBtn:hover {
+    background-color: #004bdd;
+    box-shadow: 0 6px 15px rgba(0, 82, 255, 0.5);
+}
+
+#walletAddress {
+    background: rgba(0, 82, 255, 0.1);
+    border: 1px solid #0052ff;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-family: monospace;
+    color: #fff;
+    font-size: 14px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .header {
+        padding: 10px 15px;
+        font-size: 16px;
+    }
+
+    #ui {
+        top: 60px;
+        left: 15px;
+        font-size: 18px;
+        padding: 8px 15px;
+    }
+
+    #overlay h1 {
+        font-size: 36px;
+    }
+
+    #overlay p {
+        font-size: 18px;
+    }
+
+    #startBtn, #reloadBtn {
+        padding: 12px 30px;
+        font-size: 16px;
+    }
+
+    #connectBtn {
+        padding: 8px 15px;
+        font-size: 12px;
+    }
 }
