@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="base:app_id" content="6984a6d24609f1d788ad2bd3" />
     <title>Cyber Dodge - Base Game</title>
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="/manifest.json">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -21,13 +21,13 @@
             <button id="startBtn">MAIN SEKARANG</button>
         </div>
     </div>
-    <script type="module" src="/src/game.js"></script>
-    <script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js')
-      .then(() => console.log("Game siap dijalankan Offline!"))
-      .catch(err => console.log("Gagal daftar SW:", err));
-  }
+        <script type="module" src="/src/game.js"></script>
+        <script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js')
+            .then(() => console.log("Game siap dijalankan Offline!"))
+            .catch(err => console.log("Gagal daftar SW:", err));
+    }
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/index.umd.min.js"></script>
 
